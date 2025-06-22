@@ -57,12 +57,33 @@ python3 main.py
 Example:
 
 ```bash
-python3 main.py --topology config/topology.json --template templates/router_template.j2 --output outputs
+python3 main.py --topology config/bgp.json --template templates/router_template.j2 --output outputs
 ```
 
 ### 4. Output
 
 Generated configuration files will be placed in the specified output directory (default: `outputs/`).
+
+Example: R1_config
+
+```
+hostname R1
+no ip domain lookup
+!
+interface Loopback0
+  ip address 10.255.0.1 255.255.255.255
+  description Lo0::R1
+interface Eth0/0
+  ip address 10.0.12.1 255.255.255.0
+  description Eth0/0>>R1::R2<<Eth0/0
+  no shutdown
+!
+router bgp 65001
+neighbor 10.0.12.2 remote-as 65002
+  address-family ipv4
+    neighbor 10.0.12.2 activate
+  exit-address-family
+```
 
 ## Requirements
 
