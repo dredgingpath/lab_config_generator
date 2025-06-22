@@ -1,0 +1,28 @@
+{
+  "routers": {
+    "R1": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R2"},
+        "Eth0/1": {"peer": "R3"}
+      }
+    }, 
+    "R2": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R1"},
+        "Eth0/1": {"peer": "R4"}
+      }
+    },
+    "R3": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R1"},
+        "Eth0/1": {"peer": "R4"}
+      }
+    },
+    "R4": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R2"},
+        "Eth0/1": {"peer": "R3"}
+      }
+    }
+  }
+} 

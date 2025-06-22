@@ -1,0 +1,22 @@
+hostname {{ hostname }}
+no ip domain lookup
+!
+interface Loopback0
+  ip address {{ loopback }}
+  description Lo0::{{ hostname }}
+{% for intf, detail in interfaces.items() %}
+interface {{ intf }}
+  ip address {{ detail.ip }}
+  description {{ detail.description }}
+  no shutdown
+{% endfor %}
+{% if routing.bgp -%}
+!
+router bgp {{ routing.bgp }}
+{% for neighbor in neighbors -%}
+  neighbor {{ neighbor.ip }} remote-as {{ neighbor.asn }}
+  address-family ipv4
+    neighbor {{ neighbor.ip }} activate
+  exit-address-family
+{% endfor -%}
+{% endif %}

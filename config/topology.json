@@ -1,0 +1,14 @@
+{
+  "routers": {
+    "R1": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R2"}
+      }
+    },
+    "R2": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R1"}
+      }
+    }
+  }
+}  
