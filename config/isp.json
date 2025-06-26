@@ -1,0 +1,43 @@
+{
+  "routers": {
+    "R1": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R2"},
+        "Eth0/1": {"peer": "ISP1"}
+      },
+      "routing": {
+        "bgp": "100",
+        "neighbors": [
+          { "neighbor": "R2", "asn": "100" },
+          { "neighbor": "ISP1", "asn": "1739" }
+        ]
+      }
+    },
+    "R2": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R1"},
+        "Eth0/1": {"peer": "ISP1"}
+      },
+      "routing": {
+        "bgp": "100",
+        "neighbors": [
+          { "neighbor": "R1", "asn": "100" },
+          { "neighbor": "ISP1", "asn": "1739" }
+        ]
+      }
+    },
+    "ISP1": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R1"},
+        "Eth0/1": {"peer": "R2"}
+      },
+      "routing": {
+        "bgp": "1739",
+        "neighbors": [
+          { "neighbor": "R1", "asn": "100" },
+          { "neighbor": "R2", "asn": "100" }
+        ]
+      }
+    }
+  }
+}

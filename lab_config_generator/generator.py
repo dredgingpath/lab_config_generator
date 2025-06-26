@@ -8,7 +8,7 @@ def load_topology(json_path):
         return json.load(f)['routers']
 
 def get_default_subnet(r1, r2):
-    nums = sorted([int(r1[1:]), int(r2[1:])])
+    nums = sorted([extract_router_num(r1), extract_router_num(r2)])
     third_octet = int(f"{nums[0]}{nums[1]}")
     subnet_str = f"10.0.{third_octet}.0/30"
     net = IPv4Network(subnet_str)
@@ -16,7 +16,7 @@ def get_default_subnet(r1, r2):
 
 def assign_loopbacks(topology):
     for router in topology:
-        router_num = int(router[1:])
+        router_num = extract_router_num(router)
         loopback_ip = f"10.255.0.{router_num} 255.255.255.255"
         topology[router]['loopback'] = loopback_ip
     return topology
@@ -45,7 +45,7 @@ def assign_interface_ips(topology):
                 # Format: <local_router>> <local_interface>::<peer_interface> << <peer_router>
                 data['interfaces'][iface]['description'] = f"{router}>>{iface}::{peer_iface}<<{peer}"
                 topology[peer]['interfaces'][peer_iface]['description'] = f"{peer}>>{peer_iface}::{iface}<<{router}"
-            nums = sorted([int(router[1:]), int(peer[1:])])
+            nums = sorted([extract_router_num(router), extract_router_num(peer)])
             third_octet = int(f"{nums[0]}{nums[1]}")
             subnet_str = f"10.{link_index}.{third_octet}.0/30"
             net = IPv4Network(subnet_str)
@@ -112,3 +112,7 @@ def generate_configs(topology, template_path, output_dir):
         with open(Path(output_dir) / f"{router}_config.txt", "w") as f:
             f.write(rendered)
         print(f"✅ Generated config for {router}")
+
+def extract_router_num(name):
+    num = ''.join(filter(str.isdigit, name))
+    return int(num) if num else abs(hash(name)) % 1000
