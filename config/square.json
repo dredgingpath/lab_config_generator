@@ -4,25 +4,53 @@
       "interfaces": {
         "Eth0/0": {"peer": "R2"},
         "Eth0/1": {"peer": "R3"}
+      },
+      "routing": {
+        "bgp": "100",
+        "neighbors": [
+          { "neighbor": "R2", "asn": "200" },
+          { "neighbor": "R3", "asn": "300" }
+        ]
       }
-    }, 
+    },
     "R2": {
       "interfaces": {
         "Eth0/0": {"peer": "R1"},
         "Eth0/1": {"peer": "R4"}
+      },
+      "routing": {
+        "bgp": "200",
+        "neighbors": [
+          { "neighbor": "R1", "asn": "100" },
+          { "neighbor": "R4", "asn": "400" }
+        ]
       }
     },
     "R3": {
       "interfaces": {
         "Eth0/0": {"peer": "R1"},
         "Eth0/1": {"peer": "R4"}
+      },
+      "routing": {
+        "bgp": "300",
+        "neighbors": [
+          { "neighbor": "R1", "asn": "100" },
+          { "neighbor": "R4", "asn": "400" }
+        ]
       }
     },
     "R4": {
       "interfaces": {
         "Eth0/0": {"peer": "R2"},
         "Eth0/1": {"peer": "R3"}
+      },
+      "routing": {
+        "bgp": "400",
+        "neighbors": [
+          { "neighbor": "R2", "asn": "200" },
+          { "neighbor": "R3", "asn": "300" }
+        ]
       }
     }
   }
-} 
+}
