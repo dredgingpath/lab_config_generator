@@ -42,9 +42,9 @@ def assign_interface_ips(topology):
             else:
                 peer_iface = None
             if peer_iface:
-                description = f"{iface}>>{router}::{peer}<<{peer_iface}"
-                data['interfaces'][iface]['description'] = description
-                topology[peer]['interfaces'][peer_iface]['description'] = f"{peer_iface}>>{peer}::{router}<<{iface}"
+                # Format: <local_router>> <local_interface>::<peer_interface> << <peer_router>
+                data['interfaces'][iface]['description'] = f"{router}>>{iface}::{peer_iface}<<{peer}"
+                topology[peer]['interfaces'][peer_iface]['description'] = f"{peer}>>{peer_iface}::{iface}<<{router}"
             nums = sorted([int(router[1:]), int(peer[1:])])
             third_octet = int(f"{nums[0]}{nums[1]}")
             subnet_str = f"10.{link_index}.{third_octet}.0/30"
