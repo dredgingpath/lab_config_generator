@@ -101,13 +101,27 @@ def generate_configs(topology, template_path, output_dir):
         routing = config.get("routing", {})
         loopback_ip = config.get("loopback")
         networks = collect_networks(config)
+
+        # Determine if loopback should be advertised
+        advertise_loopback = routing.get("advertise_loopback", False)
+        loopback_network = None
+        if advertise_loopback and loopback_ip:
+            ip, mask = loopback_ip.split()
+            if mask == "255.255.255.255":
+                cidr = "32"
+            else:
+                cidr = str(IPv4Network(f"0.0.0.0/{mask}").prefixlen)
+            loopback_network = f"{ip}/{cidr}"
+
         rendered = template.render(
             hostname=router,
             interfaces=interfaces,
             neighbors=neighbors,
             routing=routing,
             loopback=loopback_ip,
-            networks=networks
+            networks=networks,
+            advertise_loopback=advertise_loopback,
+            loopback_network=loopback_network
         )
         with open(Path(output_dir) / f"{router}_config.txt", "w") as f:
             f.write(rendered)

@@ -3,12 +3,100 @@
     "R1": {
       "interfaces": {
         "Eth0/0": {"peer": "R2"}
+      },
+      "routing": {
+        "bgp": "100",
+        "neighbors": [
+          { "neighbor": "R2", "asn": "200" }
+        ],
+         "advertise_loopback": true
       }
     },
     "R2": {
       "interfaces": {
-        "Eth0/0": {"peer": "R1"}
+        "Eth0/0": {"peer": "R1"},
+        "Eth0/1": {"peer": "R3"},
+        "Eth0/2": {"peer": "R4"}
+      },
+      "routing": {
+        "bgp": "200",
+        "neighbors": [
+          { "neighbor": "R1", "asn": "100" },
+          { "neighbor": "R3", "asn": "300" },
+          { "neighbor": "R4", "asn": "400" }
+        ],
+         "advertise_loopback": true
+      }
+    },
+    "R3": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R2"},
+        "Eth0/1": {"peer": "R6"}
+      },
+      "routing": {
+        "bgp": "300",
+        "neighbors": [
+          { "neighbor": "R2", "asn": "200" },
+          { "neighbor": "R6", "asn": "600" }
+        ],
+        "advertise_loopback": true        
+      }
+    },
+    "R4": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R2"},
+        "Eth0/1": {"peer": "R5"}
+      },
+      "routing": {
+        "bgp": "400",
+        "neighbors": [
+          { "neighbor": "R2", "asn": "200" },
+          { "neighbor": "R5", "asn": "500" }
+        ],
+         "advertise_loopback": true
+      }
+    },
+    "R5": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R4"},
+        "Eth0/1": {"peer": "R6"}
+      },
+      "routing": {
+        "bgp": "500",
+        "neighbors": [
+          { "neighbor": "R4", "asn": "400" },
+          { "neighbor": "R6", "asn": "600" }
+        ],
+         "advertise_loopback": true
+      }
+    },
+    "R6": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R5"},
+        "Eth0/1": {"peer": "R3"},
+        "Eth0/2": {"peer": "R7"}
+      },
+      "routing": {
+        "bgp": "600",
+        "neighbors": [
+          { "neighbor": "R5", "asn": "500" },
+          { "neighbor": "R3", "asn": "300" },
+          { "neighbor": "R7", "asn": "700" }
+        ],
+         "advertise_loopback": true
+      }
+    },
+    "R7": {
+      "interfaces": {
+        "Eth0/0": {"peer": "R6"}
+      },
+      "routing": {
+        "bgp": "700",
+        "neighbors": [
+          { "neighbor": "R6", "asn": "600" }
+        ],
+         "advertise_loopback": true
       }
     }
   }
-}  
+}

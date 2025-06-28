@@ -2,23 +2,23 @@
   "routers": {
     "R1": {
       "interfaces": {
-        "Eth0/0": { "peer": "R2" }
+        "Eth0/0": {"peer": "R2"}
       },
       "routing": {
-        "bgp": "65001",
+        "bgp": "100",
         "neighbors": [
-          { "neighbor": "R2", "asn": "65002" }
+          { "neighbor": "R2", "asn": "200" }
         ]
       }
     },
     "R2": {
       "interfaces": {
-        "Eth0/0": { "peer": "R1" }
+        "Eth0/0": {"peer": "R1"}
       },
       "routing": {
-        "bgp": "65002",
+        "bgp": "200",
         "neighbors": [
-          { "neighbor": "R1", "asn": "65001" }
+          { "neighbor": "R1", "asn": "100" }
         ]
       }
     }

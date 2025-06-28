@@ -13,6 +13,9 @@ interface {{ intf }}
 {% if routing.bgp -%}
 !
 router bgp {{ routing.bgp }}
+{% if advertise_loopback and loopback %}
+  network {{ loopback.split()[0] }} mask {{ loopback.split()[1] }}
+{% endif %}
 {% for neighbor in neighbors -%}
   neighbor {{ neighbor.ip }} remote-as {{ neighbor.asn }}
   address-family ipv4

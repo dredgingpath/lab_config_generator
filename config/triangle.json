@@ -3,39 +3,39 @@
     "R1": {
       "interfaces": {
         "Eth0/0": {"peer": "R2"},
-        "Eth0/1": {"peer": "ISP1"}
+        "Eth0/1": {"peer": "R3"}
       },
       "routing": {
         "bgp": "100",
         "neighbors": [
-          { "neighbor": "R2", "asn": "100" },
-          { "neighbor": "ISP1", "asn": "1739" }
+          { "neighbor": "R2", "asn": "200" },
+          { "neighbor": "R3", "asn": "300" }
         ]
       }
     },
     "R2": {
       "interfaces": {
         "Eth0/0": {"peer": "R1"},
-        "Eth0/1": {"peer": "ISP1"}
+        "Eth0/1": {"peer": "R3"}
       },
       "routing": {
-        "bgp": "100",
+        "bgp": "200",
         "neighbors": [
           { "neighbor": "R1", "asn": "100" },
-          { "neighbor": "ISP1", "asn": "1739" }
+          { "neighbor": "R3", "asn": "300" }
         ]
       }
     },
-    "ISP1": {
+    "R3": {
       "interfaces": {
         "Eth0/0": {"peer": "R1"},
-        "Eth0/1": {"peer": "R2"}
+        "Eth0/1": {"peer": "R3"}
       },
       "routing": {
-        "bgp": "1739",
+        "bgp": "300",
         "neighbors": [
           { "neighbor": "R1", "asn": "100" },
-          { "neighbor": "R2", "asn": "100" }
+          { "neighbor": "R2", "asn": "200" }
         ]
       }
     }
